@@ -1,0 +1,34 @@
+obj/
+obj/*
+.config/dotnet-tools.json
+.vs/v16/** 
+Web.csproj.user 
+.vs/v16/.suo 
+/*/obj/Release
+/*/obj/Debug
+bin/*
+Domain/obj/Domain.csproj.nuget.dgspec.json
+.vs/*
+.idea
+.vs/v16/.suo
+/*/.suo 
+.suo
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/.idea.Web.iml
+/modules.xml
+/contentModel.xml
+/projectSettingsUpdater.xml
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+/WebService/WebService/WebService.csproj 
+.vs/config/applicationhost.config
+*.pdf
+*.pubxml
+wwwroot/uploads/
+/bin/Debug/net5.0
