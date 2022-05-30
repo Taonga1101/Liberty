@@ -7,14 +7,34 @@ document.getElementById('leaveTypeForm').onsubmit = e => {
         showCancelButton: true
     }).then(r => {
         if (r.isConfirmed) {
+            let data = new FormData(document.getElementById('leaveTypeForm'));
             $.ajax(
                 {
                     type: 'POST',
                     url: 'SaveLeaveType',
-                    data: new FormData(document.getElementById('leaveTypeForm')),
+                    data: data,
                     cache: false,
+                    processData: false,
+                    contentType: false,
                     success: response => {
-                        console.log(response)
+                        if(response.success) {
+                            Swal.fire({
+                                title: 'Success',
+                                icon: 'success',
+                                text: 'The leave type has been saved 😊',
+                                showCancelButton: false
+                            }).then(r => {
+                                location.href = "/Config/LeaveTypes";
+                            })
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Save failed',
+                                icon: 'error',
+                                text: 'An error occured while processing your request',
+                                showCancelButton: true
+                            }).then(r => {})
+                        }
                     },
                     error: err => {
                         console.log(err)

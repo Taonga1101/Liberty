@@ -4,3 +4,21 @@
 .mT-5 {
     margin-top: 5px;
 }
+.mB-10 {
+    margin-bottom: 10px;
+}
+.mB-5 {
+    margin-bottom: 5px;
+}
+
+.mB-15 {
+    margin-bottom: 15px;
+}
+
+.mB-20 {
+    margin-bottom: 20px;
+}
+
+.text-right {
+    text-align: right;
+}

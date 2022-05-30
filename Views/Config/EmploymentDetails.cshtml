@@ -1,14 +1,13 @@
+@model dynamic
 
 @{
     ViewBag.Title = "title";
     Layout = "_App";
 }
 
-@model dynamic
-
 @{
     Layout = "_App";
-    var leaveTypes = ViewData["leaveTypes"] as IEnumerable<LeaveType>;
+    var employementDetails = ViewData["employmentDetail"] as IEnumerable<EmploymentDetail>;
 }
 
 <div class="main_content_iner ">
@@ -19,12 +18,12 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="dashboard_header_title">
-                    <h3> Leave Types</h3>
+                    <h3>Employee Details</h3>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="dashboard_breadcam text-end">
-                    <p><a href="#">Configurations</a> <i class="fas fa-caret-right"></i> Leave Types</p>
+                    <p><a href="#">Configurations</a> <i class="fas fa-caret-right"></i> Employee Details</p>
                 </div>
             </div>
         </div>
@@ -48,33 +47,37 @@
                     </div>
                 </div>
                 <div class="add_button ms-2">
-                    <a asp-controller="Config" asp-action="ManageLeaveType" class="btn_1">Add New</a>
+                    <a asp-controller="Config" asp-action="ManageEmploymentDetails" class="btn_1">Add New</a>
                 </div>
             </div>
         </div>
         <div class="QA_table mb_30">
-            @if (leaveTypes is not null)
+            @if (employementDetails is not null)
             {
             <table class="table lms_table_active">
                 <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Code</th>
-                    <th scope="col">Description</th>
-                    <th scope="col" class="text-right">Status</th>
+                    <th scope="col">Employment Number</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Contract Start</th>
+                    <th scope="col">Contract end</th>
+                    
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var leaveType in leaveTypes)
+                @foreach (var employmentDetail in employementDetails)
                 {
                     <tr>
-                        <td>@leaveType.Name</td>
-                        <td>@leaveType.Code</td>
-                        <td>@leaveType.Description</td>
-                        
-                        <td class="text-right">
-                            <a href="#" class="status_btn">@leaveType.Status</a>
-                        </td>
+                        <td>@employmentDetail.EmploymentNumber</td>
+                        <td>@employmentDetail.User.FirstName</td>
+                        <td>@employmentDetail.User.LastName</td>
+                        <td>@employmentDetail.Position.Name</td>
+                        <td>@employmentDetail.Department.Name</td>
+                        <td>@employmentDetail.ContractStart.ToLocalTime()</td>
+                        <td>@employmentDetail.ContractEnd.ToLocalTime()</td>
                     </tr>
                 }
 
