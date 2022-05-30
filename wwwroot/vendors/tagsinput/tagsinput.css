@@ -1,0 +1,39 @@
+.bootstrap-tagsinput {
+	padding: 4px 6px; border-radius: 4px; border: 1px solid rgb(204, 204, 204); border-image: none; width: 100%; color: rgb(85, 85, 85); line-height: 22px; vertical-align: middle; display: inline-block; cursor: text; box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075); background-color: rgb(255, 255, 255);
+}
+.bootstrap-tagsinput input {
+	margin: 0px; padding: 0px 6px; border: currentColor; border-image: none; width: auto; max-width: inherit; box-shadow: none; background-color: transparent;
+}
+.bootstrap-tagsinput.form-control input:-ms-input-placeholder {
+	color: rgb(119, 119, 119);
+}
+.bootstrap-tagsinput input:focus {
+	border: currentColor; border-image: none; box-shadow: none;
+}
+.bootstrap-tagsinput .badge {
+	margin: 2px 0px; padding: 5px 8px;
+}
+.bootstrap-tagsinput .badge [data-role=remove] {
+	margin-left: 8px; cursor: pointer;
+}
+.bootstrap-tagsinput .badge [data-role=remove]::after {
+	padding: 0px 4px; border-radius: 50%; font-size: 13px; content: "×"; background-color: rgba(0, 0, 0, 0.1);
+}
+.bootstrap-tagsinput .badge [data-role=remove]:hover::after {
+	background-color: rgba(0, 0, 0, 0.62);
+}
+.bootstrap-tagsinput .badge [data-role=remove]:hover:active {
+	box-shadow: inset 0px 3px 5px rgba(0,0,0,0.125);
+}
+.tt-menu {
+	list-style: none; margin: 2px 0px 0px; padding: 5px 0px; border-radius: 4px; border: 1px solid rgba(0, 0, 0, 0.15); border-image: none; left: 0px; top: 100%; font-size: 14px; float: left; display: none; position: absolute; z-index: 1000; cursor: pointer; min-width: 160px; box-shadow: 0px 6px 12px rgba(0,0,0,0.175); background-clip: padding-box; background-color: rgb(255, 255, 255); -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+.tt-suggestion {
+	padding: 3px 20px; color: rgb(51, 51, 51); line-height: 1.4285; clear: both; font-weight: 400; display: block; white-space: nowrap;
+}
+.tt-suggestion:hover {
+	outline: 0px; color: rgb(255, 255, 255); text-decoration: none; background-color: rgb(66, 139, 202);
+}
+.tt-suggestion:focus {
+	outline: 0px; color: rgb(255, 255, 255); text-decoration: none; background-color: rgb(66, 139, 202);
+}
