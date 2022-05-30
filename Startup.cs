@@ -34,6 +34,7 @@ namespace Liberty
                 ServiceLifetime.Transient);
             services.AddScoped<LeaveService>();
             services.AddScoped<EmployeeService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -21,6 +21,7 @@ namespace Liberty.Controllers
 
             return View();
         }
+        //leave details
 
         public IActionResult ManageLeaveType()
         {
@@ -33,12 +34,14 @@ namespace Liberty.Controllers
             ViewData["leaveTypes"] = leaveTypes;
             return View();
         }
-
+        
         [HttpPost]
         public IActionResult SaveLeaveType(LeaveType leaveType)
         {
             return Json(_leaveService.SaveLeaveType(leaveType));
         }
+        
+        //employment detals
         public IActionResult ManageEmploymentDetails()
         {
             return View();
@@ -54,6 +57,25 @@ namespace Liberty.Controllers
         public IActionResult SaveEmployee(EmploymentDetail employmentDetail)
         {
             return Json(_employeeService.SaveEmployee(employmentDetail));
+        }
+        
+        //position details
+        public IActionResult ManagePositions()
+        {
+            return View();
+        }
+
+        public IActionResult Positions()
+        {
+            var positions = _employeeService.GetPositions();
+            ViewData["positions"] = positions;
+            return View();
+        }
+        
+        [HttpPost]
+        public IActionResult SavePositions(Position position)
+        {
+            return Json(_employeeService.SavePosition(position));
         }
         
         
