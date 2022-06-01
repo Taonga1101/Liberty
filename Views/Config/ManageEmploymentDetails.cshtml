@@ -3,6 +3,91 @@
 @{
     ViewBag.Title = "title";
     Layout = "_App";
+    var positions = ViewData["positions"] as IEnumerable<Position>;
+    var departments = ViewData["departments"] as IEnumerable<Department>;
 }
 
-<h2>title</h2>
+<div class="main_content_iner ">
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-12">
+                <div class="dashboard_header mb_30">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="dashboard_header_title">
+                                <h3>Manage Employment Details</h3>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="dashboard_breadcam text-end">
+                                <p><a asp-controller="Config" asp-action="Index">Configurations</a> <i class="fas fa-caret-right"></i><a asp-controller="Config" asp-action="EmploymentDetails">Employment Details</a><i class="fas fa-caret-right"></i> Manage Employment Details</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="cs-modal">
+                            <div class="modal-body">
+                                <form id="employmentDetailsForm">
+                                    <div class="form-group">
+                                        <label>Employment Number</label>
+                                        <input name="employmentNumber " type="text" class="form-control mT-10 mB-20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <input name="firstName" type="text" class="form-control mT-10 mB-20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input name="lastName" type="text" class="form-control mT-10 mB-20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Department</label>
+                                        <select name="departmentId" class="form-control mT-10 mB-20">
+                                            <option value="" disabled selected>Select Department</option>
+                                            @foreach (var department in departments)
+                                            {
+                                                <option value="@department.DepartmentId">@department.Name</option>
+                                            }
+
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Position</label>
+                                        <select name="positionId" class="form-control mT-10 mB-20">
+                                            <option value="" disabled selected>Select position</option>
+                                            @foreach (var position in positions)
+                                            {
+                                                <option value="@position.PositionId">@position.Name</option>
+                                            }
+
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Contract Start</label>
+                                        <input name="contractStart" type="date" class="form-control mT-10 mB-20 ">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Contract End</label>
+                                        <input name="contractEnd" type="date" class="form-control mT-10 mB-20 ">
+                                    </div>
+                                    <br>
+                                    <button class="btn btn-success">Submit 😊</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* .card *@
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/manage-employment-details-script.js"></script>

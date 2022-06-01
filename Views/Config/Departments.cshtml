@@ -3,7 +3,11 @@
 @{
     ViewBag.Title = "title";
     Layout = "_App";
-    var positions = ViewData["positions"] as IEnumerable<Position>;
+}
+
+@{
+    Layout = "_App";
+    var departments = ViewData["departments"] as IEnumerable<Department>;
 }
 
 <div class="main_content_iner ">
@@ -14,12 +18,12 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="dashboard_header_title">
-                    <h3> Positions</h3>
+                    <h3> Department</h3>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="dashboard_breadcam text-end">
-                    <p><a href="#">Configurations</a> <i class="fas fa-caret-right"></i> Positions</p>
+                    <p><a href="#">Configurations</a> <i class="fas fa-caret-right"></i> Departments</p>
                 </div>
             </div>
         </div>
@@ -28,7 +32,7 @@
 <div class="col-12">
     <div class="QA_section">
         <div class="white_box_tittle list_header">
-            <h4>Type List</h4>
+            <h4>Department List</h4>
             <div class="box_right d-flex lms_block">
                 <div class="serach_field_2">
                     <div class="search_inner">
@@ -43,25 +47,33 @@
                     </div>
                 </div>
                 <div class="add_button ms-2">
-                    <a asp-controller="Config" asp-action="ManagePositions" class="btn_1">Add New</a>
+                    <a asp-controller="Config" asp-action="ManageDepartments" class="btn_1">Add New</a>
                 </div>
             </div>
         </div>
         <div class="QA_table mb_30">
-            @if (positions is not null)
+            @if (departments is not null)
             {
             <table class="table lms_table_active">
                 <thead>
                 <tr>
                     <th scope="col">Name</th>
-                   
+                    <th scope="col">Code</th>
+                    <th scope="col">office</th>
+                    <th scope="col" class="text-right">Status</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var position in positions)
+                @foreach (var department in departments)
                 {
                     <tr>
-                        <td>@position.Name</td>
+                        <td>@department.Name</td>
+                        <td>@department.Code</td>
+                        <td>@department.Office.Name</td>
+                        
+                        <td class="text-right">
+                            <a href="#" class="status_btn">@department.Status</a>
+                        </td>
                     </tr>
                 }
 

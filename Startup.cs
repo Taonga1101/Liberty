@@ -34,6 +34,11 @@ namespace Liberty
                 ServiceLifetime.Transient);
             services.AddScoped<LeaveService>();
             services.AddScoped<EmployeeService>();
+            services.AddScoped<UserService>();
+            
+            
+            
+            
             
         }
 

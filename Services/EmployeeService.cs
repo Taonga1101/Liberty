@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using Liberty.DataModels;
 using Liberty.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Liberty.Services
@@ -11,34 +13,62 @@ namespace Liberty.Services
     {
         private readonly LIBERTYContext _context;
         private readonly ILogger<EmployeeService> _logger;
+        private readonly UserService _userService;
 
-        public EmployeeService(LIBERTYContext context, ILogger<EmployeeService> logger)
+        public EmployeeService(LIBERTYContext context, ILogger<EmployeeService> logger, UserService userService)
         {
             _context = context;
             _logger = logger;
+            _userService = userService;
         }
         
-        public dynamic SaveEmployee(EmploymentDetail employmentDetail)
+        public dynamic SaveEmployee(EmployeeDto employmentDetail)
         {
             dynamic response = new ExpandoObject();
             try
             {
+                EmploymentDetail details = new EmploymentDetail();
+                details.EmploymentDetailsId = employmentDetail.EmploymentDetailsId;
+                details.EmploymentNumber = employmentDetail.EmploymentNumber;
+                details.PositionId = employmentDetail.PositionId;
+                details.DepartmentId = employmentDetail.DepartmentId;
+                details.ContractStart = employmentDetail.ContractStart;
+                details.ContractEnd = employmentDetail.ContractEnd;
+                details.IsHod = employmentDetail.IsHod;
+
+                User userInfo = new User();
+                userInfo.UserId = employmentDetail.UserId;
+                userInfo.FirstName = employmentDetail.FirstName;
+                userInfo.LastName = employmentDetail.LastName;
+                userInfo.MobileNumber = employmentDetail.MobileNumber;
+                userInfo.Gender = employmentDetail.Gender;
+                userInfo.Email = employmentDetail.Email;
+                userInfo.Address = employmentDetail.Address;
+
+             
+                details.UserId = _userService.SaveUser(userInfo);
+                
+
+                if (details.UserId == 0)
+                {
+                    throw new Exception("User save error");
+                }
+             
                 if (employmentDetail.EmploymentDetailsId == 0)
                 {
-                    _context.EmploymentDetails.Add(employmentDetail);
+                    _context.EmploymentDetails.Add(details);
 
                 }
                 else
                 {
-                    _context.EmploymentDetails.Update(employmentDetail);
+                    _context.EmploymentDetails.Update(details);
 
                 }
 
                 _context.SaveChanges();
                 response.success = true;
-                response.message = "Saved";
-
-
+                response.message = "Saved";     
+                
             }
             catch (Exception e)
             {
@@ -127,7 +157,12 @@ namespace Liberty.Services
 
         public List<Department> GetDepartments()
         {
-            return _context.Departments.ToList();
+            return _context.Departments.Include("Office").ToList();
+        }
+        
+        public List<Office> GetOffices()
+        {
+            return _context.Offices.ToList();
         }
 
     }

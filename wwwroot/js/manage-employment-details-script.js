@@ -1,4 +1,4 @@
-document.getElementById('leaveTypeForm').onsubmit = function(e) {
+document.getElementById('employmentDetailsForm').onsubmit = function(e) {
     e.preventDefault();
     Swal.fire({
         title: 'Confirm submission',
@@ -7,11 +7,11 @@ document.getElementById('leaveTypeForm').onsubmit = function(e) {
         showCancelButton: true
     }).then(r => {
         if (r.isConfirmed) {
-            let data = new FormData(document.getElementById('leaveTypeForm'));
+            let data = new FormData(document.getElementById('employmentDetailsForm'));
             $.ajax(
                 {
                     type: 'POST',
-                    url: 'SaveLeaveType',
+                    url: 'SaveEmploymentDetails',
                     data: data,
                     cache: false,
                     processData: false,
@@ -21,10 +21,10 @@ document.getElementById('leaveTypeForm').onsubmit = function(e) {
                             Swal.fire({
                                 title: 'Success',
                                 icon: 'success',
-                                text: 'The leave type has been saved 😊',
+                                text: 'The Employee has been saved 😊',
                                 showCancelButton: false
                             }).then(r => {
-                                location.href = "/Config/LeaveTypes";
+                                location.href = "/Config/EmploymentDetails";
                             })
                         }
                         else {
