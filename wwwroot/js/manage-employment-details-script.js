@@ -11,7 +11,7 @@ document.getElementById('employmentDetailsForm').onsubmit = function(e) {
             $.ajax(
                 {
                     type: 'POST',
-                    url: 'SaveEmploymentDetails',
+                    url: 'SaveEmployee',
                     data: data,
                     cache: false,
                     processData: false,

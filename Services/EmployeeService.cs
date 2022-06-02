@@ -29,7 +29,7 @@ namespace Liberty.Services
             {
                 EmploymentDetail details = new EmploymentDetail();
                 details.EmploymentDetailsId = employmentDetail.EmploymentDetailsId;
-                details.EmploymentNumber = employmentDetail.EmploymentNumber;
+                details.EmploymentNumber = employmentDetail.EmployeeNumber;
                 details.PositionId = employmentDetail.PositionId;
                 details.DepartmentId = employmentDetail.DepartmentId;
                 details.ContractStart = employmentDetail.ContractStart;
@@ -82,7 +82,11 @@ namespace Liberty.Services
 
         public List<EmploymentDetail> GetEmploymentDetails()
         {
-            return _context.EmploymentDetails.ToList();
+            return _context.EmploymentDetails
+                .Include("User")
+                .Include("Department")
+                .Include("Position")
+                .ToList();
         }
 
         public dynamic SavePosition(Position position)

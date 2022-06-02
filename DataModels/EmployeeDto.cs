@@ -12,7 +12,7 @@ namespace Liberty.DataModels
         public string Email { get; set; }
         public string Address { get; set; }
         public int EmploymentDetailsId { get; set; }
-        public string EmploymentNumber { get; set; }
+        public string EmployeeNumber { get; set; }
         public int PositionId { get; set; }
         public int DepartmentId { get; set; }
         public DateTime ContractStart { get; set; }

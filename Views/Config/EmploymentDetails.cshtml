@@ -7,7 +7,7 @@
 
 @{
     Layout = "_App";
-    var employementDetails = ViewData["employmentDetail"] as IEnumerable<EmploymentDetail>;
+    var employmentDetails = ViewData["employmentDetails"] as IEnumerable<EmploymentDetail>;
 }
 
 <div class="main_content_iner ">
@@ -52,14 +52,13 @@
             </div>
         </div>
         <div class="QA_table mb_30">
-            @if (employementDetails is not null)
+            @if (employmentDetails is not null)
             {
             <table class="table lms_table_active">
                 <thead>
                 <tr>
                     <th scope="col">Employment Number</th>
-                    <th scope="col">First name</th>
-                    <th scope="col">Last name</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Position</th>
                     <th scope="col">Department</th>
                     <th scope="col">Contract Start</th>
@@ -68,16 +67,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var employmentDetail in employementDetails)
+                @foreach (var employmentDetail in employmentDetails)
                 {
                     <tr>
                         <td>@employmentDetail.EmploymentNumber</td>
-                        <td>@employmentDetail.User.FirstName</td>
-                        <td>@employmentDetail.User.LastName</td>
+                        <td>@employmentDetail.User.FirstName @employmentDetail.User.LastName</td>
                         <td>@employmentDetail.Position.Name</td>
                         <td>@employmentDetail.Department.Name</td>
-                        <td>@employmentDetail.ContractStart.ToLocalTime()</td>
-                        <td>@employmentDetail.ContractEnd.ToLocalTime()</td>
+                        <td>@employmentDetail.ContractStart.ToShortDateString()</td>
+                        <td>@employmentDetail.ContractEnd.ToShortDateString()</td>
                     </tr>
                 }
 
