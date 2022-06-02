@@ -66,29 +66,47 @@
         <span>Dashboard</span>
     </a>
 </li>
-<li class="">
+    <li class="">
+        <a class="has-arrow" href="#" aria-expanded="false">
+            <img src="~/img/menu-icon/2.svg" alt="">
+            <span>Configurations</span>
+        </a>
+        <ul>
+            <li>
+                <a asp-controller="Config" asp-action="LeaveTypes">Leave Types</a>
+            </li>
+            <li>
+                <a asp-controller="Config" asp-action="Positions">Positions</a>
+            </li>
+            <li>
+                <a asp-controller="Config" asp-action="EmploymentDetails">Employees</a>
+            </li>
+            <li>
+                <a asp-controller="Config" asp-action="Departments">Departments</a>
+            </li>
+            <li>
+                <a asp-controller="LeaveApplication" asp-action="ApplyForLeave">LeaveApplications</a>
+            </li>
+            <li>
+                <a href="#">Roles</a>
+            </li>
+            <li>
+                <a href="#">Privileges</a>
+            </li>
+        </ul>
+    </li>
+    <li class="">
     <a class="has-arrow" href="#" aria-expanded="false">
         <img src="~/img/menu-icon/2.svg" alt="">
-        <span>Configurations</span>
+        <span>Leave</span>
     </a>
     <ul>
+        
         <li>
-            <a asp-controller="Config" asp-action="LeaveTypes">Leave Types</a>
+            <a asp-controller="LeaveApplication" asp-action="ApplyForLeave">Apply</a>
         </li>
         <li>
-            <a asp-controller="Config" asp-action="Positions">Positions</a>
-        </li>
-        <li>
-            <a asp-controller="Config" asp-action="EmploymentDetails">Employees</a>
-        </li>
-        <li>
-            <a asp-controller="Config" asp-action="Departments">Departments</a>
-        </li>
-        <li>
-            <a href="#">Roles</a>
-        </li>
-        <li>
-            <a href="#">Privileges</a>
+            <a asp-controller="LeaveApplication" asp-action="LeaveApplications">Leave Applications</a>
         </li>
     </ul>
 </li>

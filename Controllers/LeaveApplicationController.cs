@@ -1,13 +1,13 @@
-using Liberty.Models;
+using Liberty.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Liberty.Controllers
 {
     public class LeaveApplicationController : Controller
     {
-        private readonly LeaveApplication _leaveService;
+        private readonly LeaveService _leaveService;
 
-        public LeaveApplicationController(LeaveApplication leaveService)
+        public LeaveApplicationController(LeaveService leaveService)
         {
             _leaveService = leaveService;
             
