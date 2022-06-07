@@ -37,7 +37,7 @@ namespace Liberty.Controllers
             return Json(_userService.SaveRole(role));
         }
         
-        public IActionResult ManagePivilege()
+        public IActionResult ManagePrivilege()
         {
             return View();
         }

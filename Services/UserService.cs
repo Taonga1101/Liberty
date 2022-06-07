@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Security.Claims;
 using Liberty.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Liberty.Services
@@ -11,11 +15,32 @@ namespace Liberty.Services
     {
         private readonly LIBERTYContext _context;
         private readonly ILogger<UserService> _logger;
+        private readonly ISession _session;
+        private readonly string _userId;
 
-        public UserService(LIBERTYContext context, ILogger<UserService> logger)
+        public UserService(IHttpContextAccessor httpContextAccessor, LIBERTYContext context, IConfiguration appConfig, ISession session, ILogger<UserService> logger)
         {
             _context = context;
             _logger = logger;
+
+            HttpContext httpContext = httpContextAccessor.HttpContext;
+            if (httpContext != null)
+            {
+                if (httpContextAccessor.HttpContext != null)
+                {
+                    _session = httpContextAccessor.HttpContext.Session;
+                    _userId = httpContextAccessor.HttpContext.User.Claims
+                        .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                }
+            }
+
+            _session = session;
+        }  
+
+        public User GetCurrentUser()
+        {
+            var userId = _session.GetInt32("UserId");
+            return _context.Users.FirstOrDefault(u => u.UserId == userId);
         }
 
         public dynamic SaveRole(Role role)
@@ -111,6 +136,12 @@ namespace Liberty.Services
 
             return userId;
 
+        }
+
+        public EmploymentDetail GetEmployeeDetails(int userId)
+        {
+            return _context.EmploymentDetails.Include(p => p.Position)
+                .FirstOrDefault(u => u.UserId == userId);
         }
     }
 } 

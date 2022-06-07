@@ -1,15 +1,15 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Liberty.Models;
 using Liberty.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Liberty
@@ -28,16 +28,54 @@ namespace Liberty
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);//We set Time here 
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.Name = "LibertyCookie";
+            });   
+            
+            
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Cookie.SameSite = SameSiteMode.None;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                    options.Cookie.IsEssential = true;
+                    options.LoginPath = _configuration.GetValue<string>("ApplicationCredentials:LoginPath");
+                    options.Cookie.Name = _configuration.GetValue<string>("ApplicationCredentials:CookieName");
+                    options.AccessDeniedPath = _configuration.GetValue<string>("ApplicationCredentials:AccessDeniedPath");
+                });
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.OnAppendCookie = cookieContext =>
+                    CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+                options.OnDeleteCookie = cookieContext =>
+                    CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+            });
+            
+
+            services.AddDistributedMemoryCache();
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
+            services.AddScoped(sp => sp.GetService<IHttpContextAccessor>().HttpContext.Session);
 
             var connectionString = _configuration.GetConnectionString("LibertyDb");
             services.AddDbContext<LIBERTYContext>(options => options.UseSqlServer(connectionString),
                 ServiceLifetime.Transient);
+            
             services.AddScoped<LeaveService>();
             services.AddScoped<EmployeeService>();
             services.AddScoped<UserService>();
-            
-            
-            
+            services.AddScoped<AuthenticationService>();
             
             
         }
@@ -61,6 +99,8 @@ namespace Liberty
             app.UseRouting();
 
             app.UseAuthorization();
+            
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
@@ -68,6 +108,26 @@ namespace Liberty
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private void CheckSameSite(HttpContext httpContext, CookieOptions options)
+        {
+            if (options.SameSite != SameSiteMode.None) return;
+            if (options.SameSite == SameSiteMode.None && DisallowsSiteNone(httpContext))
+            {
+                options.SameSite = SameSiteMode.None;
+            }
+        }
+
+        private static bool DisallowsSiteNone(HttpContext context)
+        {
+            var userAgent = context.Request.Headers["User-Agent"];
+            if (string.IsNullOrEmpty(userAgent))
+            {
+                return false;
+            }
+
+            return ((ICollection<string>)userAgent).Contains("BrokenUserAgent") || ((ICollection<string>)userAgent).Contains("BrokenUserAgent2");
         }
     }
 }

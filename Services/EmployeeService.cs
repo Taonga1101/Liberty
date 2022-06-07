@@ -45,6 +45,9 @@ namespace Liberty.Services
                 userInfo.Email = employmentDetail.Email;
                 userInfo.Address = employmentDetail.Address;
 
+                UserCredential userCredential = new UserCredential();
+                
+
              
                 details.UserId = _userService.SaveUser(userInfo);
                 
@@ -57,6 +60,13 @@ namespace Liberty.Services
                 if (employmentDetail.EmploymentDetailsId == 0)
                 {
                     _context.EmploymentDetails.Add(details);
+
+                    userCredential.UserCredentialId = details.UserId;
+                    userCredential.UserId = details.UserId;
+                    userCredential.UserName = userInfo.Email;
+                    userCredential.Password = "qwerty@1234";
+
+                    _context.UserCredentials.Add(userCredential);
 
                 }
                 else

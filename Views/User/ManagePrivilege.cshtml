@@ -12,13 +12,13 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="dashboard_header_title">
-                                <h3>Manage Roles </h3>
+                                <h3>Manage Privilleges </h3>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="dashboard_breadcam text-end">
                                 
-                                <p><a asp-controller="User" asp-action="Index">Configurations</a> <i class="fas fa-caret-right"></i><a asp-controller="User" asp-action="Role">Role</a><i class="fas fa-caret-right"></i> Manage Roles</p>
+                                <p><a asp-controller="User" asp-action="Index">Configurations</a> <i class="fas fa-caret-right"></i><a asp-controller="User" asp-action="Privilege">Privilege</a><i class="fas fa-caret-right"></i> Manage Privileges</p>
                             </div>
                         </div>
                     </div>
@@ -29,14 +29,14 @@
                     <div class="card-body">
                         <div class="cs-modal">
                             <div class="modal-body">
-                                <form id="RoleForm">
+                                <form id="PrivilegeForm">
                                     <div class="form-group">
                                         <label>Name</label>
                                         <input name="name" type="text" class="form-control mT-10 mB-20">
                                     </div>
                                     <div class="form-group">
-                                        <label>Description</label>
-                                        <textarea name="description" type="text" class="form-control mT-10 mB-20 h-120"></textarea>
+                                        <label>Code</label>
+                                        <input name="code" type="text" class="form-control mT-10 mB-20 h-120">
                                     </div>
                                     <div class="form-group" style="display:none">
                                         <label>Status</label>
@@ -57,7 +57,8 @@
 </div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/js/manage-role-script.js"></script>
+<script src="~/js/manage-privilege-script.js"></script>
+
 
 
 

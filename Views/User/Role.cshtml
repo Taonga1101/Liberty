@@ -1,8 +1,84 @@
 @model dynamic
 
 @{
-    ViewBag.Title = "title";
+ 
     Layout = "_App";
+    var roles = ViewData["roles"] as IEnumerable<Role>;
 }
 
-<h2>title</h2>
+<div class="main_content_iner ">
+<div class="container-fluid p-0">
+<div class="row justify-content-center">
+<div class="col-12">
+    <div class="dashboard_header mb_50">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="dashboard_header_title">
+                    <h3> Role</h3>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="dashboard_breadcam text-end">
+                    <p><a href="#">Users</a> <i class="fas fa-caret-right"></i> Roles</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12">
+    <div class="QA_section">
+        <div class="white_box_tittle list_header">
+            <h4>Role List</h4>
+            <div class="box_right d-flex lms_block">
+                <div class="serach_field_2">
+                    <div class="search_inner">
+                        <form Active="#">
+                            <div class="search_field">
+                                <input type="text" placeholder="Search content here...">
+                            </div>
+                            <button type="submit">
+                                <i class="ti-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="add_button ms-2">
+                    <a asp-controller="User" asp-action="ManageRole" class="btn_1">Add New</a>
+                </div>
+            </div>
+        </div>
+        <div class="QA_table mb_30">
+            @if (roles is not null)
+            {
+            <table class="table lms_table_active">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col" class="text-right">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var role in roles)
+                {
+                    <tr>
+                        <td>@role.Name</td>
+                        <td>@role.Description</td>
+                        
+                        
+                        <td class="text-right">
+                            <a href="#" class="status_btn">@role.Status</a>
+                        </td>
+                    </tr>
+                }
+
+                </tbody>
+            </table>
+            }
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+

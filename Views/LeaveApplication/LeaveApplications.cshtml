@@ -3,6 +3,105 @@
 @{
     ViewBag.Title = "title";
     Layout = "_App";
+    var leaveApplications = ViewData["leaveApplications"] as IEnumerable<LeaveApplication>;
+    var isSupervisor = ViewData["isSupervisor"] as bool? ?? false;
 }
 
-<h2>title</h2>
+<div class="main_content_iner ">
+<div class="container-fluid p-0">
+<div class="row justify-content-center">
+<div class="col-12">
+    <div class="dashboard_header mb_50">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="dashboard_header_title">
+                    <h3> Leave Applications</h3>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="dashboard_breadcam text-end">
+                    <p><a href="#">Leave</a> <i class="fas fa-caret-right"></i> Leave Applications</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12">
+    <div class="QA_section">
+        <div class="white_box_tittle list_header">
+            <h4>Application List</h4>
+            <div class="box_right d-flex lms_block">
+                <div class="serach_field_2">
+                    <div class="search_inner">
+                        <form Active="#">
+                            <div class="search_field">
+                                <input type="text" placeholder="Search content here...">
+                            </div>
+                            <button type="submit">
+                                <i class="ti-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="add_button ms-2">
+                    <a asp-controller="LeaveApplication" asp-action="ApplyForLeave" class="btn_1">Apply For Leave</a>
+                </div>
+            </div>
+        </div>
+        <div class="QA_table mb_30">
+            @if (leaveApplications is not null)
+            {
+            <table class="table lms_table_active table-responsive">
+                <thead>
+                <tr>
+                    <th scope="col">Leave Type</th>
+                    <th scope="col">Applicant</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Reasons</th>
+                    <th scope="col">Emergency Contact</th>
+                    <th scope="col" class="text-right">Status</th>
+                    @if (isSupervisor)
+                    {
+                        <th>Actions</th>
+                    }
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var  leaveApplication in leaveApplications)
+                {
+                    <tr>
+                        <td>@leaveApplication.LeaveType.Name</td>
+                        <td>@leaveApplication.User.FirstName @leaveApplication.User.LastName</td>
+                        <td>@leaveApplication.StartDate.ToString("dd MMM yyyy")</td>
+                        <td>@leaveApplication.EndDate.ToString("dd MMM yyyy")</td>
+                        <td>@leaveApplication.Reason</td>
+                          <td>@leaveApplication.EmergencyContact</td>
+                        
+                        
+                        <td class="text-right">
+                            <a href="#" class="status_btn">@leaveApplication.Status</a>
+                        </td>
+                         @if (isSupervisor)
+                         {
+                             <td class="text-right">
+                                 <button onclick="approveApplication('@leaveApplication.LeaveApplicationId')" class="btn btn-primary">Approve</button>
+                                 <button onclick="rejectApplication('@leaveApplication.LeaveApplicationId')" class="btn btn-danger">Reject</button>
+                             </td>
+                         }
+                    </tr>
+                }
+
+                </tbody>
+            </table>
+            }
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/supervisor-scripts.js"></script>
+
